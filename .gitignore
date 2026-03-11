@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+
+# Editors / IDE
+.vscode/
+!.vscode/extensions.json
+.idea/
+
+# Environment files
+.env
+.env.*
+*.local
+
+# Database
+*.db
+
+/backup
