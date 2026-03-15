@@ -45,11 +45,13 @@ class Issue(Base):
     assignee_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
     )
 
     reporter_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
     )
 
     story_points: Mapped[int | None] = mapped_column(Integer)

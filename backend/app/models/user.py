@@ -28,10 +28,10 @@ class User(Base):
     )
 
     # Relationships
-    organization_users = relationship("OrganizationUser", back_populates="user", cascade="all, delete")
+    organization_members = relationship("OrganizationMember", back_populates="member", cascade="all, delete")
         
     # Relationships to access organizations directly through the association table
-    organizations = relationship("Organization", secondary="organization_users", back_populates="users")
+    organizations = relationship("Organization", secondary="organization_members", back_populates="members")
 
     assigned_issues = relationship("Issue", back_populates="assignee")
     reported_issues = relationship("Issue", back_populates="reporter")

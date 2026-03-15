@@ -3,10 +3,15 @@
 import enum
 
 
-class OrganizationUserRole(str, enum.Enum):
+class OrganizationMemberRole(str, enum.Enum):
     owner = "owner"
     admin = "admin"
     member = "member"
+
+class OrganizationMemberStatus(str, enum.Enum):
+    invited = "invited"
+    active = "active"
+    removed = "removed"
 
 
 class ProjectStatus(str, enum.Enum):

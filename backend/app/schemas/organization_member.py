@@ -1,20 +1,20 @@
 import uuid
 from datetime import datetime
 from pydantic import BaseModel
-from app.models.enum import OrganizationUserRole
+from app.models.enum import OrganizationMemberRole
 
 
-class OrganizationUserCreate(BaseModel):
+class OrganizationMemberCreate(BaseModel):
     user_id: uuid.UUID
     organization_id: uuid.UUID
-    role: OrganizationUserRole | None = None
+    role: OrganizationMemberRole | None = None
 
 
-class OrganizationUserRead(BaseModel):
+class OrganizationMemberRead(BaseModel):
     id: uuid.UUID
     user_id: uuid.UUID
     organization_id: uuid.UUID
-    role: OrganizationUserRole
+    role: OrganizationMemberRole
     created_at: datetime
     updated_at: datetime
 

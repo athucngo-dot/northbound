@@ -1,6 +1,6 @@
 from .user import User
 from .organization import Organization
-from .organization_user import OrganizationUser
+from .organization_member import OrganizationMember
 from .project import Project
 from .sprint import Sprint
 from .epic import Epic

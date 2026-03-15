@@ -6,11 +6,11 @@ from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 
 from app.db.base import Base
-from app.models.enum import OrganizationUserRole
+from app.models.enum import OrganizationMemberRole, OrganizationMemberStatus
 
 
-class OrganizationUser(Base):
-    __tablename__ = "organization_users"
+class OrganizationMember(Base):
+    __tablename__ = "organization_members"
     __table_args__ = (UniqueConstraint("user_id", "organization_id"),)
 
     id: Mapped[uuid.UUID] = mapped_column(
@@ -27,11 +27,26 @@ class OrganizationUser(Base):
         ForeignKey("organizations.id", ondelete="CASCADE"),
     )
 
-    role: Mapped[OrganizationUserRole] = mapped_column(
-        Enum(OrganizationUserRole),
-        default=OrganizationUserRole.member,
+    role: Mapped[OrganizationMemberRole] = mapped_column(
+        Enum(OrganizationMemberRole),
+        default=OrganizationMemberRole.member,
         nullable=False,
     )
+
+    status: Mapped[OrganizationMemberStatus] = mapped_column(
+        Enum(OrganizationMemberStatus),
+        default=OrganizationMemberStatus.invited,
+        nullable=False,
+    )
+
+    invited_by: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+    )
+    
+    invited_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    joined_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(
@@ -39,5 +54,5 @@ class OrganizationUser(Base):
     )
 
     # Relationships
-    user = relationship("User", back_populates="organization_users")
-    organization = relationship("Organization", back_populates="organization_users")
+    member = relationship("User", back_populates="organization_members")
+    organization = relationship("Organization", back_populates="organization_members")

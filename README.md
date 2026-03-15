@@ -22,8 +22,8 @@ Frontend:
 ## Project Structure
 
 northbound/
-- backend/ → FastAPI backend
-- frontend/ → React frontend
+- backend/ -> FastAPI backend
+- frontend/ -> React frontend
 
 ## Run Backend
 

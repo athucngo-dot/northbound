@@ -25,9 +25,9 @@ class Organization(Base):
     )
 
     projects = relationship("Project", back_populates="organizations", cascade="all, delete")
-    organization_users = relationship("OrganizationUser", back_populates="organizations", cascade="all, delete")
+    organization_members = relationship("OrganizationMember", back_populates="organization", cascade="all, delete")
     
     # Access users in the organization
-    users = relationship("User", secondary="organization_users", back_populates="organizations")
+    members = relationship("User", secondary="organization_members", back_populates="organizations")
 
     activities = relationship("Activity", back_populates="organizations", cascade="all, delete")
