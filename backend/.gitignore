@@ -20,3 +20,4 @@ dist/
 # Alembic cache
 .alembic/
 
+logs/

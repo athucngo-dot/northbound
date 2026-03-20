@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
+    LOG_PATH: str = "logs/app.log"
+
     class Config:
         env_file = ".env"
 
