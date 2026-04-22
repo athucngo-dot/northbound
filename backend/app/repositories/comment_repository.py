@@ -13,7 +13,7 @@ class CommentRepository:
     def create(self, comment: CommentCreate):
         db_comment = Comment(**comment.model_dump())
         self.db.add(db_comment)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_comment)
         return db_comment
 

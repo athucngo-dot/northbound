@@ -13,7 +13,7 @@ class ActivityRepository:
     def create(self, activity: ActivityCreate):
         db_activity = Activity(**activity.model_dump())
         self.db.add(db_activity)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_activity)
         return db_activity
 

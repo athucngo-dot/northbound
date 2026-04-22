@@ -16,7 +16,7 @@ class OrganizationRepository:
     def create(self, organization: OrganizationCreate):
         db_org = Organization(**organization.model_dump())
         self.db.add(db_org)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_org)
         return db_org
 

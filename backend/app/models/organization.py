@@ -24,10 +24,17 @@ class Organization(Base):
         DateTime, server_default=func.now(), onupdate=func.now()
     )
 
-    projects = relationship("Project", back_populates="organizations", cascade="all, delete")
+    projects = relationship("Project", back_populates="organization", cascade="all, delete")
     organization_members = relationship("OrganizationMember", back_populates="organization", cascade="all, delete")
     
     # Access users in the organization
-    members = relationship("User", secondary="organization_members", back_populates="organizations")
+    members = relationship(
+        "User",
+        secondary="organization_members",
+        primaryjoin="Organization.id==OrganizationMember.organization_id",
+        secondaryjoin="User.id==OrganizationMember.user_id",
+        back_populates="organizations",
+        viewonly=True # This relationship is read-only since the association table is managed through OrganizationMember
+    )
 
-    activities = relationship("Activity", back_populates="organizations", cascade="all, delete")
+    activities = relationship("Activity", back_populates="organization", cascade="all, delete")

@@ -51,14 +51,14 @@ def upgrade() -> None:
     sa.Column('organization_id', sa.UUID(), nullable=False),
     sa.Column('role', sa.String(length=50), server_default="member", nullable=False),
     sa.Column('status', sa.String(length=50), server_default="invited", nullable=False),
-    sa.Column('invited_by', sa.UUID(), nullable=True),
+    sa.Column('invited_by_id', sa.UUID(), nullable=True),
     sa.Column('invited_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('joined_at', sa.DateTime(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.ForeignKeyConstraint(['organization_id'], ['organizations.id'], ondelete='CASCADE'),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['invited_by'], ['users.id'], ondelete='SET NULL'),
+    sa.ForeignKeyConstraint(['invited_by_id'], ['users.id'], ondelete='SET NULL'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('user_id', 'organization_id')
     )

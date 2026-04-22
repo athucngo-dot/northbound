@@ -13,7 +13,7 @@ class OrganizationMemberRepository:
     def create(self, org_member: OrganizationMemberCreate):
         db_org_member = OrganizationMember(**org_member.model_dump())
         self.db.add(db_org_member)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_org_member)
         return db_org_member
 

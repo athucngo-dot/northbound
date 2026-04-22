@@ -13,7 +13,7 @@ class EpicRepository:
     def create(self, epic: EpicCreate):
         db_epic = Epic(**epic.model_dump())
         self.db.add(db_epic)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_epic)
         return db_epic
 

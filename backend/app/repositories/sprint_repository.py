@@ -13,7 +13,7 @@ class SprintRepository:
     def create(self, sprint: SprintCreate):
         db_sprint = Sprint(**sprint.model_dump())
         self.db.add(db_sprint)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_sprint)
         return db_sprint
 

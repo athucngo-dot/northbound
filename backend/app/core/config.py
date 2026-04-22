@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -10,8 +10,24 @@ class Settings(BaseSettings):
 
     LOG_PATH: str = "logs/app.log"
 
-    class Config:
-        env_file = ".env"
+    ALLOWED_ORIGINS: str = ""
+
+    @property
+    def allowed_origins(self) -> list[str]:
+        parts = self.ALLOWED_ORIGINS.split(",")
+
+        result = []
+        for part in parts:
+            cleaned = part.strip()
+            if cleaned:
+                result.append(cleaned)
+
+        return result
+    
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8"
+    )
 
 
 settings = Settings()

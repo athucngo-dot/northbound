@@ -13,7 +13,7 @@ class AttachmentRepository:
     def create(self, attachment: AttachmentCreate):
         db_attachment = Attachment(**attachment.model_dump())
         self.db.add(db_attachment)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_attachment)
         return db_attachment
 

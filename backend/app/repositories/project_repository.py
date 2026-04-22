@@ -13,7 +13,7 @@ class ProjectRepository:
     def create(self, project: ProjectCreate):
         db_project = Project(**project.model_dump())
         self.db.add(db_project)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_project)
         return db_project
 

@@ -39,7 +39,7 @@ class OrganizationMember(Base):
         nullable=False,
     )
 
-    invited_by: Mapped[uuid.UUID | None] = mapped_column(
+    invited_by_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="SET NULL"),
         nullable=True,
@@ -54,5 +54,15 @@ class OrganizationMember(Base):
     )
 
     # Relationships
-    member = relationship("User", back_populates="organization_members")
+    member = relationship(
+        "User",
+        foreign_keys=[user_id],
+        back_populates="organization_members"
+    )
+
+    invited_by = relationship(
+        "User",
+        foreign_keys=[invited_by_id] 
+    )
+
     organization = relationship("Organization", back_populates="organization_members")

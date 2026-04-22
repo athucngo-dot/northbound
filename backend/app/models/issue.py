@@ -65,8 +65,18 @@ class Issue(Base):
     project = relationship("Project", back_populates="issues")
     sprint = relationship("Sprint", back_populates="issues", passive_deletes=True)
     epic = relationship("Epic", back_populates="issues", passive_deletes=True)
-    assignee = relationship("User", back_populates="assigned_issues", passive_deletes=True)
-    reporter = relationship("User", back_populates="reported_issues", passive_deletes=True)
+    assignee = relationship(
+        "User", 
+        foreign_keys=[assignee_id],
+        back_populates="assigned_issues",
+        passive_deletes=True
+    )
+    reporter = relationship(
+        "User", 
+        foreign_keys=[reporter_id],
+        back_populates="reported_issues",
+        passive_deletes=True
+    )
 
     comments = relationship("Comment", back_populates="issue", cascade="all, delete-orphan")
     activities = relationship("Activity", back_populates="issue")

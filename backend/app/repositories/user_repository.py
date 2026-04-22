@@ -21,7 +21,7 @@ class UserRepository:
             last_name=user.last_name
         )
         self.db.add(db_user)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_user)
         return db_user
 

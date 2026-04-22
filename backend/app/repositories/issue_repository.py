@@ -13,7 +13,7 @@ class IssueRepository:
     def create(self, issue: IssueCreate):
         db_issue = Issue(**issue.model_dump())
         self.db.add(db_issue)
-        self.db.commit()
+        self.db.flush()  # Flush to assign an ID before commit
         self.db.refresh(db_issue)
         return db_issue
 

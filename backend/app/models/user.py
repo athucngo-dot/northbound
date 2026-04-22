@@ -28,13 +28,33 @@ class User(Base):
     )
 
     # Relationships
-    organization_members = relationship("OrganizationMember", back_populates="member", cascade="all, delete")
+    organization_members = relationship(
+        "OrganizationMember",
+        foreign_keys="[OrganizationMember.user_id]",
+        back_populates="member",
+        cascade="all, delete")
         
     # Relationships to access organizations directly through the association table
-    organizations = relationship("Organization", secondary="organization_members", back_populates="members")
+    organizations = relationship(
+        "Organization",
+        secondary="organization_members",
+        primaryjoin="User.id==OrganizationMember.user_id",
+        secondaryjoin="Organization.id==OrganizationMember.organization_id",
+        back_populates="members",
+        viewonly=True # This relationship is read-only since the association table is managed through OrganizationMember
+    )
 
-    assigned_issues = relationship("Issue", back_populates="assignee")
-    reported_issues = relationship("Issue", back_populates="reporter")
+    assigned_issues = relationship(
+        "Issue",
+        foreign_keys="[Issue.assignee_id]",
+        back_populates="assignee"
+    )
+
+    reported_issues = relationship(
+        "Issue",
+        foreign_keys="[Issue.reporter_id]",
+        back_populates="reporter"
+    )
 
     comments = relationship("Comment", back_populates="user")
     activities = relationship("Activity", back_populates="user")
