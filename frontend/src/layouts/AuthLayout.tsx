@@ -14,6 +14,9 @@ export default function AuthLayout({ title, subtitle }: AuthLayoutProps) {
                 {/* Header */}
                 <div className="text-center mb-6">
                     <img src={logo} alt="Northbound logo" className="mx-auto h-10" />
+                    <h1 className="text-lg font-bold text-blue-600 ">
+                        Northbound
+                    </h1>
                     {title && (
                         <h1 className="text-2xl font-semibold mt-2">{title}</h1>
                     )}

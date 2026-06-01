@@ -4,4 +4,9 @@ export const API_ENDPOINTS = {
     FORGOT_PASSWORD: "/api/v1/auth/forgot-password/",
     ME: "/api/v1/users/me/",
     LOGOUT: "/api/v1/auth/logout/",
+
+    COMPLETE_ONBOARDING: "/api/v1/users/complete-onboarding/",
+
+    MY_ORGANIZATIONS: "/api/v1/organizations/me/",
+    CREATE_ORGANIZATION: "/api/v1/organizations/",
 };
