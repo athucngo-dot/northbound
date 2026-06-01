@@ -25,3 +25,8 @@ def create_user(user: UserCreate, response: Response, db: Session = Depends(get_
 def read_current_user(current_user = Depends(get_current_user)):
     return current_user
 
+@router.put("/complete-onboarding", response_model=UserRead)
+def complete_onboarding(current_user = Depends(get_current_user), db: Session = Depends(get_db)):
+    service = UserService(db)
+    updated_user = service.complete_onboarding(current_user.id)
+    return updated_user

@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from app.repositories.user_repository import UserRepository
 from app.core.security import verify_password, create_access_token
 
+from app.core.config import settings
+
 class AuthService:
     def __init__(self, db: Session):
         self.db = db
@@ -23,7 +25,7 @@ class AuthService:
             key="access_token",
             value=token,
             httponly=True,     # httpOnly to prevent JavaScript access
-            secure=True,       # HTTPS only (False in local dev if needed)
+            secure=settings.IS_PRODUCTION, # HTTPS only (False in local development)
             samesite="lax",    # CSRF protection - allows sending cookies on same-site requests
             max_age=60 * 60 * 24,  # 1 day expiration
         )

@@ -12,6 +12,8 @@ class Settings(BaseSettings):
 
     ALLOWED_ORIGINS: str = ""
 
+    IS_PRODUCTION: bool = False
+
     @property
     def allowed_origins(self) -> list[str]:
         parts = self.ALLOWED_ORIGINS.split(",")

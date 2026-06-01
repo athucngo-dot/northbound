@@ -32,3 +32,13 @@ class UserService:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="User with this email already exists."
             )
+        
+    def complete_onboarding(self, user_id):
+        user = self.repo.get_by_id(user_id)
+        if not user:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+        if user.onboarding_completed:
+            return user  # No update needed
+
+        return self.repo.mark_onboarding_completed(user)

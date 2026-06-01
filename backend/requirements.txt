@@ -10,3 +10,4 @@ passlib[bcrypt]
 alembic
 redis
 python-dotenv
+python-slugify

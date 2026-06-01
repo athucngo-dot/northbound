@@ -27,3 +27,12 @@ class UserRepository:
 
     def list_all(self):
         return self.db.query(User).all()
+    
+    def mark_onboarding_completed(self, user: User) -> User:
+        user.onboarding_completed = True
+
+        self.db.add(user)
+        self.db.commit()
+        self.db.refresh(user)
+
+        return user
