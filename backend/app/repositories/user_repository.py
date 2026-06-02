@@ -30,9 +30,6 @@ class UserRepository:
     
     def mark_onboarding_completed(self, user: User) -> User:
         user.onboarding_completed = True
-
         self.db.add(user)
-        self.db.commit()
-        self.db.refresh(user)
 
         return user

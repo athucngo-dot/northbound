@@ -12,6 +12,7 @@ from app.services.slug_service import make_unique_slug
 from app.models.user import User
 from app.schemas.organization_member import OrganizationMemberCreateInternal
 from app.models.enum import OrganizationMemberRole, OrganizationMemberStatus
+from app.repositories.user_repository import UserRepository
 
 
 class OrganizationService:
@@ -19,9 +20,11 @@ class OrganizationService:
     def __init__(self, db: Session):
         self.repo = OrganizationRepository(db)
         self.organization_member_repo = OrganizationMemberRepository(db)
+        self.user_repo = UserRepository(db)
     
     def create_my_organization(self, current_user: User, org_data: OrganizationCreateRequest):
 
+        # creat new organization with unique slug
         org_data.name = org_data.name.strip()
         slug = generate_slug(org_data.name)
         unique_slug = make_unique_slug(slug, self.repo.slug_exists)
@@ -60,6 +63,9 @@ class OrganizationService:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Failed to create organization membership."
             )
+        
+        if not current_user.onboarding_completed:
+            self.user_repo.mark_onboarding_completed(current_user)
         
         return new_org
         

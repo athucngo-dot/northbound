@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 from pydantic import BaseModel, field_validator
-
+from pydantic_core import PydanticCustomError
 
 class OrganizationCreateRequest(BaseModel):
     name: str
@@ -13,10 +13,15 @@ class OrganizationCreateRequest(BaseModel):
         value = value.strip()
 
         if not value or len(value.strip()) < 2:
-            raise ValueError("Organization name must be at least 2 characters long.")
+            raise PydanticCustomError(
+                "name",
+                "Organization name must be at least 2 characters long."
+            )
+
         
         if len(value) > 255:
-            raise ValueError(
+            raise PydanticCustomError(
+                "name",
                 "Organization name cannot exceed 255 characters."
             )
         
